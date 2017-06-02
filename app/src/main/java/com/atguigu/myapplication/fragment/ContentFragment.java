@@ -53,6 +53,23 @@ public class ContentFragment extends BaseFragment {
         pagers.add(new SettingPager(context));//设置中心
 
         vp.setAdapter(new MyAdapter());
+        //设置RadioGroup的监听
+        rgMain.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                switch (checkedId){
+                    case R.id.rb_home:
+                        vp.setCurrentItem(0,false);
+                        break;
+                    case R.id.rb_news:
+                        vp.setCurrentItem(1,false);
+                        break;
+                    case R.id.rb_setting:
+                        vp.setCurrentItem(2,false);
+                        break;
+                }
+            }
+        });
         //默认选中主页
         rgMain.check(R.id.rb_home);
     }
