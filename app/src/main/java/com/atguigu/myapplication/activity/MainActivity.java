@@ -1,16 +1,30 @@
 package com.atguigu.myapplication.activity;
 
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 
 import com.atguigu.myapplication.R;
+import com.atguigu.myapplication.fragment.ContentFragment;
+import com.atguigu.myapplication.fragment.LeftMenuFragment;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.jeremyfeinstein.slidingmenu.lib.app.SlidingFragmentActivity;
 
 public class MainActivity extends SlidingFragmentActivity {
 
+    public static final String LEFT_TAG = "left_tag";
+    public static final String MAIN_TAG = "main_tag";
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        initSlidingMenu();
+        //初始化Fragment
+        initFragment();
+
+    }
+
+    private void initSlidingMenu() {
         //设置主页面
         setContentView(R.layout.activity_main);
 
@@ -31,6 +45,18 @@ public class MainActivity extends SlidingFragmentActivity {
 
         //设置主页面占的宽度
         slidingMenu.setBehindOffset(200);
+    }
+
+    private void initFragment() {
+        //1.得到FragmentManger
+        FragmentManager fm = getSupportFragmentManager();
+        //2.开启事务
+        FragmentTransaction ft = fm.beginTransaction();
+        //3.替换两个Fragment
+        ft.replace(R.id.fl_left,new LeftMenuFragment(), LEFT_TAG);
+        ft.replace(R.id.fl_main,new ContentFragment(), MAIN_TAG);
+        //4.提交事务
+        ft.commit();
 
     }
 }
