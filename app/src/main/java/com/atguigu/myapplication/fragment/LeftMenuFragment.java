@@ -11,6 +11,7 @@ import com.atguigu.myapplication.R;
 import com.atguigu.myapplication.activity.MainActivity;
 import com.atguigu.myapplication.base.BaseFragment;
 import com.atguigu.myapplication.domain.NewsCenterBean;
+import com.atguigu.myapplication.pager.NewsPager;
 
 import java.util.List;
 
@@ -33,7 +34,7 @@ public class LeftMenuFragment extends BaseFragment {
     @Override
     public View initView() {
         listView = new ListView(context);
-        listView.setPadding(0,40,0,0);
+        listView.setPadding(0, 40, 0, 0);
 
         //设置ListView的item的点击事件
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -43,9 +44,12 @@ public class LeftMenuFragment extends BaseFragment {
                 prePosition = position;
                 //适配器刷新
                 adapter.notifyDataSetChanged();//getCount-->getView
-
+                //1.得到MainActivity
                 MainActivity mainActivity = (MainActivity) context;
                 mainActivity.getSlidingMenu().toggle();//关<->开
+
+                //根据位置切换到对应的详情页面
+                switchPager(prePosition);
 
             }
         });
@@ -64,13 +68,25 @@ public class LeftMenuFragment extends BaseFragment {
         adapter = new LeftMenuAdapter();
         listView.setAdapter(adapter);
 
+        switchPager(prePosition);
+
     }
 
-    class LeftMenuAdapter extends BaseAdapter{
+    private void switchPager(int postion) {
+        MainActivity mainActivity = (MainActivity) context;
+        //2.得到ContentFragment
+        ContentFragment contentFragment = mainActivity.getContentFragment();
+        //3.得到NewsPager
+        NewsPager newsPager = contentFragment.getNewsPager();
+        //4.调用切换方法
+        newsPager.swichPager(postion);
+    }
+
+    class LeftMenuAdapter extends BaseAdapter {
 
         @Override
         public int getCount() {
-            return datas ==null ? 0 : datas.size();
+            return datas == null ? 0 : datas.size();
         }
 
         @Override
@@ -85,12 +101,12 @@ public class LeftMenuFragment extends BaseFragment {
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            TextView textView = (TextView) View.inflate(context, R.layout.item_leftmenu,null);
+            TextView textView = (TextView) View.inflate(context, R.layout.item_leftmenu, null);
 
-            if(prePosition==position){
+            if (prePosition == position) {
                 //高亮
                 textView.setEnabled(true);
-            }else{
+            } else {
                 //默认
                 textView.setEnabled(false);
             }

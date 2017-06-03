@@ -125,6 +125,14 @@ public class ContentFragment extends BaseFragment {
         mainActivity.getSlidingMenu().setTouchModeAbove(touchmodeFullscreen);
     }
 
+    /**
+     * 得到新闻中心
+     * @return
+     */
+    public NewsPager getNewsPager() {
+        return (NewsPager) pagers.get(1);
+    }
+
     class MyAdapter extends PagerAdapter{
         @Override
         public Object instantiateItem(ViewGroup container, int position) {
