@@ -1,7 +1,6 @@
 package com.atguigu.myapplication.fragment;
 
 import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RadioGroup;
@@ -12,6 +11,7 @@ import com.atguigu.myapplication.base.BasePager;
 import com.atguigu.myapplication.pager.HomePager;
 import com.atguigu.myapplication.pager.NewsPager;
 import com.atguigu.myapplication.pager.SettingPager;
+import com.atguigu.myapplication.view.NoViewPager;
 
 import java.util.ArrayList;
 
@@ -28,10 +28,13 @@ import butterknife.InjectView;
 public class ContentFragment extends BaseFragment {
 
     @InjectView(R.id.vp)
-    ViewPager vp;
+    NoViewPager  vp;
     @InjectView(R.id.rg_main)
     RadioGroup rgMain;
 
+    /**
+     * 装页面的
+     */
     private ArrayList<BasePager> pagers;
 
     @Override
@@ -52,19 +55,21 @@ public class ContentFragment extends BaseFragment {
         pagers.add(new NewsPager(context));//新闻中心
         pagers.add(new SettingPager(context));//设置中心
 
+        //设置适配器
         vp.setAdapter(new MyAdapter());
         //设置RadioGroup的监听
         rgMain.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 switch (checkedId){
-                    case R.id.rb_home:
+                    case R.id.rb_home://主页面
+                        //ViewPager.setCurrentItem(position)
                         vp.setCurrentItem(0,false);
                         break;
-                    case R.id.rb_news:
+                    case R.id.rb_news://新闻
                         vp.setCurrentItem(1,false);
                         break;
-                    case R.id.rb_setting:
+                    case R.id.rb_setting://设置
                         vp.setCurrentItem(2,false);
                         break;
                 }
@@ -78,6 +83,7 @@ public class ContentFragment extends BaseFragment {
         @Override
         public Object instantiateItem(ViewGroup container, int position) {
             BasePager basePager = pagers.get(position);//HomePager,NewsPager,SettingPager
+            //视图
             View rootView = basePager.rootView;
             //调用initData方法
             basePager.initData();//HomePager,NewsPager,SettingPager
