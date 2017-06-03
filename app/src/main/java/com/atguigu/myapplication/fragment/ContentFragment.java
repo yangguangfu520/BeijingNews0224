@@ -65,16 +65,39 @@ public class ContentFragment extends BaseFragment {
                     case R.id.rb_home://主页面
                         //ViewPager.setCurrentItem(position)
                         vp.setCurrentItem(0,false);
+                        //调用initData方法
+                        pagers.get(0).initData();
                         break;
                     case R.id.rb_news://新闻
                         vp.setCurrentItem(1,false);
+                        pagers.get(1).initData();
                         break;
                     case R.id.rb_setting://设置
                         vp.setCurrentItem(2,false);
+                        pagers.get(2).initData();
                         break;
                 }
             }
         });
+
+
+//        vp.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+//            @Override
+//            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+//
+//            }
+//
+//            @Override
+//            public void onPageSelected(int position) {
+//                pagers.get(position).initData();
+//            }
+//
+//            @Override
+//            public void onPageScrollStateChanged(int state) {
+//
+//            }
+//        });
+//        pagers.get(0).initData();
         //默认选中主页
         rgMain.check(R.id.rb_home);
     }
@@ -86,7 +109,7 @@ public class ContentFragment extends BaseFragment {
             //视图
             View rootView = basePager.rootView;
             //调用initData方法
-            basePager.initData();//HomePager,NewsPager,SettingPager
+            //basePager.initData();//HomePager,NewsPager,SettingPager
             container.addView(rootView);
             return rootView;
         }

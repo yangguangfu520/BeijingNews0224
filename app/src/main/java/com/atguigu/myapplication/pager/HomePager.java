@@ -2,6 +2,7 @@ package com.atguigu.myapplication.pager;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.util.Log;
 import android.view.Gravity;
 import android.widget.TextView;
 
@@ -23,6 +24,7 @@ public class HomePager extends BasePager {
     @Override
     public void initData() {
         super.initData();
+        Log.e("TAG","HomePager-数据初始化...");
         //把数据绑定到视图上
 
         //设置标题
