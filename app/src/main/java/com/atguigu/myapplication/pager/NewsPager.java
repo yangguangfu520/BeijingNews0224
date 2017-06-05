@@ -2,6 +2,7 @@ package com.atguigu.myapplication.pager;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -17,6 +18,7 @@ import com.atguigu.myapplication.detailpager.TopicMenuDetailPager;
 import com.atguigu.myapplication.detailpager.VoteMenuDetailPager;
 import com.atguigu.myapplication.domain.NewsCenterBean;
 import com.atguigu.myapplication.fragment.LeftMenuFragment;
+import com.atguigu.myapplication.utils.CacheUtils;
 import com.atguigu.myapplication.utils.ConstantUtils;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
@@ -70,6 +72,12 @@ public class NewsPager extends BasePager {
 
         //添加到布局上
         fl_content.addView(textView);
+        //获取数据
+        String saveJson = CacheUtils.getString(context, ConstantUtils.NEWSCENTER_PAGER_URL);//
+        if(!TextUtils.isEmpty(saveJson)){//当不是null,""
+            processData(saveJson);
+            Log.e("TAG","取出缓存的数据..=="+saveJson);
+        }
 
         //联网请求
         getDataFromNet();
@@ -94,6 +102,8 @@ public class NewsPager extends BasePager {
                     @Override
                     public void onResponse(String response, int id) {
                         Log.e("TAG", "请求成功==" + response);
+                        //缓存数据
+                        CacheUtils.putString(context,ConstantUtils.NEWSCENTER_PAGER_URL,response);
                         processData(response);
                     }
 
@@ -114,7 +124,7 @@ public class NewsPager extends BasePager {
         MainActivity mainActivity = (MainActivity) context;
         //实例化详情页面
         basePagers = new ArrayList<>();
-        basePagers.add(new NewsMenuDetailPager(context));//新闻详情页面
+        basePagers.add(new NewsMenuDetailPager(context,datas.get(0).getChildren()));//新闻详情页面
         basePagers.add(new TopicMenuDetailPager(context));//专题详情页面
         basePagers.add(new PhotosMenuDetailPager(context));//组图详情页面
         basePagers.add(new InteractMenuDetailPager(context));//互动详情页面
