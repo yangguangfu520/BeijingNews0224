@@ -5,6 +5,7 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 
 import com.atguigu.myapplication.R;
 import com.atguigu.myapplication.base.MenuDetailBasePager;
@@ -29,6 +30,7 @@ public class NewsMenuDetailPager extends MenuDetailBasePager {
     private final List<NewsCenterBean.DataBean.ChildrenBean> datas;
     private ViewPager viewpager;
     private TabPageIndicator indicator;
+    private ImageButton ib_next;
     /**
      * TabDetailPager页面集合
      */
@@ -44,6 +46,15 @@ public class NewsMenuDetailPager extends MenuDetailBasePager {
         View view = View.inflate(context, R.layout.pager_news_menu_detail,null);
         viewpager = (ViewPager) view.findViewById(R.id.viewpager);
         indicator = (TabPageIndicator) view.findViewById(R.id.indicator);
+        ib_next = (ImageButton) view.findViewById(R.id.ib_next);
+        //设置点击事件
+        ib_next.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //切换到下一个页面
+                viewpager.setCurrentItem(viewpager.getCurrentItem()+1);
+            }
+        });
         //创建子类的视图
         return view;
     }
