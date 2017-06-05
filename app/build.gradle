@@ -30,4 +30,5 @@ dependencies {
     compile project(':SlidingMenu_library')
     compile 'com.zhy:okhttputils:2.6.2'
     compile 'com.google.code.gson:gson:2.2.4'
+    compile project(':ViewPagerIndicator_library')
 }
