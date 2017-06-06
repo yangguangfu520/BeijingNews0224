@@ -1,7 +1,9 @@
 package com.atguigu.myapplication.detailpager;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
@@ -19,6 +21,7 @@ import android.widget.Toast;
 import com.atguigu.beijingnewslibrary.utils.CacheUtils;
 import com.atguigu.beijingnewslibrary.utils.ConstantUtils;
 import com.atguigu.myapplication.R;
+import com.atguigu.myapplication.activity.NewsDetailActivity;
 import com.atguigu.myapplication.base.MenuDetailBasePager;
 import com.atguigu.myapplication.domain.NewsCenterBean;
 import com.atguigu.myapplication.domain.TabDetailPagerBean;
@@ -164,7 +167,7 @@ public class TabDetailPager extends MenuDetailBasePager {
 
                 int realPosition = position -2;
                 TabDetailPagerBean.DataBean.NewsBean newsBean = newsBeanList.get(realPosition);
-                Log.e("TAG",""+newsBean.getId()+"-----------"+newsBean.getTitle());
+                Log.e("TAG",""+newsBean.getId()+"-----------"+newsBean.getTitle()+",url =="+newsBean.getUrl());
                 //获取
                 String idArray = CacheUtils.getString(context, READ_ID_ARRAY);//""
                 //判断是否存在-不存在
@@ -178,6 +181,13 @@ public class TabDetailPager extends MenuDetailBasePager {
                     //适配器刷新
                     adapter.notifyDataSetChanged();
                 }
+
+                String url = ConstantUtils.BASE_URL + newsBean.getUrl();
+
+                //跳转到Activity显示新闻详情内容
+                Intent intent = new Intent(context,NewsDetailActivity.class);
+                intent.setData(Uri.parse(url));
+                context.startActivity(intent);
 
 
 

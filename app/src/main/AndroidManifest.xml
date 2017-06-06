@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.atguigu.myapplication">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:name=".app.MyApplocation"
@@ -18,10 +18,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.MainActivity"
-            android:theme="@style/Theme.PageIndicatorDefaults"
-            />
-        <activity android:name=".activity.GuideActivity"></activity>
+        <activity
+            android:name=".activity.MainActivity"
+            android:theme="@style/Theme.PageIndicatorDefaults" />
+        <activity android:name=".activity.GuideActivity" />
+        <activity android:name=".activity.NewsDetailActivity"></activity>
     </application>
 
 </manifest>
