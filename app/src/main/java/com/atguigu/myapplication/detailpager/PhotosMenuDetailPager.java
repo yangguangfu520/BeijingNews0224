@@ -1,6 +1,7 @@
 package com.atguigu.myapplication.detailpager;
 
 import android.content.Context;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
@@ -8,10 +9,15 @@ import android.widget.ProgressBar;
 
 import com.atguigu.beijingnewslibrary.utils.ConstantUtils;
 import com.atguigu.myapplication.R;
+import com.atguigu.myapplication.adapter.PhotosMenuDetailPagerAdapater;
 import com.atguigu.myapplication.base.MenuDetailBasePager;
 import com.atguigu.myapplication.domain.NewsCenterBean;
+import com.atguigu.myapplication.domain.PhotosMenuDetailPagerBean;
+import com.google.gson.Gson;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
+
+import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -32,6 +38,11 @@ public class PhotosMenuDetailPager extends MenuDetailBasePager {
     @InjectView(R.id.progressbar)
     ProgressBar progressbar;
     private String url;
+    private PhotosMenuDetailPagerAdapater adapater;
+    /**
+     * 图组的数据
+     */
+    private List<PhotosMenuDetailPagerBean.DataBean.NewsBean> datas;
 
     public PhotosMenuDetailPager(Context context, NewsCenterBean.DataBean dataBean) {
         super(context);
@@ -39,12 +50,11 @@ public class PhotosMenuDetailPager extends MenuDetailBasePager {
     }
 
 
-
     @Override
     public View initView() {
         //创建子类的视图
         View view = View.inflate(context, R.layout.pager_photos_menu_detail, null);
-        ButterKnife.inject(this,view);
+        ButterKnife.inject(this, view);
         return view;
     }
 
@@ -70,7 +80,7 @@ public class PhotosMenuDetailPager extends MenuDetailBasePager {
 
                     @Override
                     public void onResponse(String response, int id) {
-                        Log.e("TAG", "图组请求成功==" + response);
+                        Log.e("TAG", "图组请求成功==");
                         processData(response);
 
                     }
@@ -80,6 +90,23 @@ public class PhotosMenuDetailPager extends MenuDetailBasePager {
     }
 
     private void processData(String json) {
+        PhotosMenuDetailPagerBean bean = new Gson().fromJson(json, PhotosMenuDetailPagerBean.class);
+        datas = bean.getData().getNews();
+
+        if(datas != null && datas.size() >0){
+            //有数据
+            progressbar.setVisibility(View.GONE);
+            adapater = new PhotosMenuDetailPagerAdapater(context,datas);
+            //设置适配器
+            recyclerview.setAdapter(adapater);
+
+            //布局管理器
+            recyclerview.setLayoutManager(new LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false));
+
+        }else{
+            //没有数据
+            progressbar.setVisibility(View.VISIBLE);
+        }
 
     }
 }
