@@ -1,4 +1,4 @@
-package com.atguigu.myapplication.utils;
+package com.atguigu.beijingnewslibrary.utils;
 
 /**
  * 作者：杨光福 on 2017/6/3 10:21

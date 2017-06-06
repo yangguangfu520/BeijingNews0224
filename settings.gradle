@@ -1,4 +1,4 @@
-include ':app', ':SlidingMenu_library'
+include ':app', ':SlidingMenu_library', ':BeiJingNewsLibrary'
 include ':ViewPagerIndicator_library'
 include ':PullToRefresh_library'
 

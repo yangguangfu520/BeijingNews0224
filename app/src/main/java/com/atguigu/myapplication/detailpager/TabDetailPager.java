@@ -14,11 +14,11 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.atguigu.beijingnewslibrary.utils.ConstantUtils;
 import com.atguigu.myapplication.R;
 import com.atguigu.myapplication.base.MenuDetailBasePager;
 import com.atguigu.myapplication.domain.NewsCenterBean;
 import com.atguigu.myapplication.domain.TabDetailPagerBean;
-import com.atguigu.myapplication.utils.ConstantUtils;
 import com.atguigu.myapplication.view.HorizontalScrollViewPager;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;

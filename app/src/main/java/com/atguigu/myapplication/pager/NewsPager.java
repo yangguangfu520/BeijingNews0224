@@ -8,6 +8,8 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.TextView;
 
+import com.atguigu.beijingnewslibrary.utils.CacheUtils;
+import com.atguigu.beijingnewslibrary.utils.ConstantUtils;
 import com.atguigu.myapplication.activity.MainActivity;
 import com.atguigu.myapplication.base.BasePager;
 import com.atguigu.myapplication.base.MenuDetailBasePager;
@@ -18,8 +20,6 @@ import com.atguigu.myapplication.detailpager.TopicMenuDetailPager;
 import com.atguigu.myapplication.detailpager.VoteMenuDetailPager;
 import com.atguigu.myapplication.domain.NewsCenterBean;
 import com.atguigu.myapplication.fragment.LeftMenuFragment;
-import com.atguigu.myapplication.utils.CacheUtils;
-import com.atguigu.myapplication.utils.ConstantUtils;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
 
