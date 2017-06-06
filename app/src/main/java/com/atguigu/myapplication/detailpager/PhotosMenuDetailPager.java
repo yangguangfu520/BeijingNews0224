@@ -1,6 +1,7 @@
 package com.atguigu.myapplication.detailpager;
 
 import android.content.Context;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -39,6 +40,8 @@ public class PhotosMenuDetailPager extends MenuDetailBasePager {
     RecyclerView recyclerview;
     @InjectView(R.id.progressbar)
     ProgressBar progressbar;
+    @InjectView(R.id.refresh_layout)
+    SwipeRefreshLayout refreshLayout;
     private String url;
     private PhotosMenuDetailPagerAdapater adapater;
     /**
@@ -57,6 +60,15 @@ public class PhotosMenuDetailPager extends MenuDetailBasePager {
         //创建子类的视图
         View view = View.inflate(context, R.layout.pager_photos_menu_detail, null);
         ButterKnife.inject(this, view);
+        //设置下拉刷新的监听
+        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                getDataFromNet(url);
+            }
+        });
+        //设置滑动多少距离有效果
+//        refreshLayout.setDistanceToTriggerSync(100);
         return view;
     }
 
@@ -95,20 +107,23 @@ public class PhotosMenuDetailPager extends MenuDetailBasePager {
         PhotosMenuDetailPagerBean bean = new Gson().fromJson(json, PhotosMenuDetailPagerBean.class);
         datas = bean.getData().getNews();
 
-        if(datas != null && datas.size() >0){
+        if (datas != null && datas.size() > 0) {
             //有数据
             progressbar.setVisibility(View.GONE);
-            adapater = new PhotosMenuDetailPagerAdapater(context,datas);
+            adapater = new PhotosMenuDetailPagerAdapater(context, datas);
             //设置适配器
             recyclerview.setAdapter(adapater);
 
             //布局管理器
-            recyclerview.setLayoutManager(new LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false));
+            recyclerview.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
 
-        }else{
+        } else {
             //没有数据
             progressbar.setVisibility(View.VISIBLE);
         }
+
+        //隐藏刷新进度效果
+        refreshLayout.setRefreshing(false);
 
     }
 
@@ -120,20 +135,21 @@ public class PhotosMenuDetailPager extends MenuDetailBasePager {
 
     /**
      * 设置List和Grid风格的切换和按钮的设置
+     *
      * @param iv
      */
     public void swichListAndGrid(ImageButton iv) {
-        if(isShowList){
+        if (isShowList) {
             //显示Grid效果
-            recyclerview.setLayoutManager(new GridLayoutManager(context,2,GridLayoutManager.VERTICAL,false));
+            recyclerview.setLayoutManager(new GridLayoutManager(context, 2, GridLayoutManager.VERTICAL, false));
             isShowList = false;
             //按钮状态-List
             iv.setImageResource(R.drawable.icon_pic_list_type);
 //            adapater.notifyItemChanged(0,datas.size());
-        }else{
+        } else {
             //显示List
             //布局管理器
-            recyclerview.setLayoutManager(new LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false));
+            recyclerview.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
             isShowList = true;
             //按钮状态-Grid
             iv.setImageResource(R.drawable.icon_pic_grid_type);
