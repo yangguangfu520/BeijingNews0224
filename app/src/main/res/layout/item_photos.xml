@@ -19,7 +19,7 @@
             android:layout_height="160dp"
             android:layout_gravity="center_horizontal"
             android:layout_weight="1"
-            android:scaleType="centerCrop"
+            android:scaleType="fitXY"
             android:src="@drawable/pic_item_list_default" />
 
         <TextView
