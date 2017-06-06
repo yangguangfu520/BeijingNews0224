@@ -126,7 +126,7 @@ public class NewsPager extends BasePager {
         basePagers = new ArrayList<>();
         basePagers.add(new NewsMenuDetailPager(context,datas.get(0).getChildren()));//新闻详情页面
         basePagers.add(new TopicMenuDetailPager(context));//专题详情页面
-        basePagers.add(new PhotosMenuDetailPager(context));//组图详情页面
+        basePagers.add(new PhotosMenuDetailPager(context,datas.get(2)));//组图详情页面
         basePagers.add(new InteractMenuDetailPager(context));//互动详情页面
         basePagers.add(new VoteMenuDetailPager(context));//投票详情页面
 
@@ -217,6 +217,9 @@ public class NewsPager extends BasePager {
      */
     public void swichPager(int prePosition) {
 
+        //设置标题
+        tv_title.setText(datas.get(prePosition).getTitle());
+
         MenuDetailBasePager basePager = basePagers.get(prePosition);//NewsMenuDetailPager,TopicMenuDetailPager...
         View rootView = basePager.rootView;
         fl_content.removeAllViews();//把之前显示的给移除
@@ -225,6 +228,15 @@ public class NewsPager extends BasePager {
 
         //调用InitData
         basePager.initData();
+
+
+        if(prePosition ==2){
+            //显示
+            ib_switch_list_grid.setVisibility(View.VISIBLE);
+        }else{
+            //隐藏
+            ib_switch_list_grid.setVisibility(View.GONE);
+        }
 
     }
 }

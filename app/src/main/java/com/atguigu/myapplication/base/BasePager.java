@@ -25,6 +25,8 @@ public class BasePager {
     public View rootView;
     public TextView tv_title;
     public ImageButton ib_menu;
+    public ImageButton ib_switch_list_grid;
+
 
     /**
      * 子类的视图添加到该布局上
@@ -39,6 +41,7 @@ public class BasePager {
         tv_title = (TextView) rootView.findViewById(R.id.tv_title);
         ib_menu = (ImageButton) rootView.findViewById(R.id.ib_menu);
         fl_content = (FrameLayout) rootView.findViewById(R.id.fl_content);
+        ib_switch_list_grid = (ImageButton) rootView.findViewById(R.id.ib_switch_list_grid);
 
         //设置点击事件
         ib_menu.setOnClickListener(new View.OnClickListener() {
