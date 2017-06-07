@@ -3,6 +3,7 @@ package com.atguigu.beijingnewslibrary.utils;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Environment;
+import android.util.Log;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -16,6 +17,12 @@ import java.io.FileOutputStream;
  */
 
 public class LocalCachUtils {
+    private final MemoryCachUtils momenyCachUtils;
+
+    public LocalCachUtils(MemoryCachUtils momenyCachUtils) {
+        this.momenyCachUtils = momenyCachUtils;
+    }
+
     /**
      * 保存图片
      *
@@ -25,7 +32,7 @@ public class LocalCachUtils {
     public void putBitmap2Local(String imageUrl, Bitmap bitmap) {
         try {
             //sdcard/beijingnews/ljsk;l;;llkkljhjjsk
-            String dir = Environment.getExternalStorageDirectory() + "/beijingnews/";
+            String dir = Environment.getExternalStorageDirectory()+"/beijingnews";
             //文件名称
             String fileName = MD5Encoder.encode(imageUrl);
             //sdcard/beijingnews/ljsk;l;;llkkljhjjsk
@@ -40,6 +47,8 @@ public class LocalCachUtils {
             if (!file.exists()) {
                 file.createNewFile();
             }
+
+            Log.e("TAG","file=="+file.getAbsolutePath());
 
             //保存图片
             FileOutputStream fos = new FileOutputStream(file);
@@ -63,7 +72,7 @@ public class LocalCachUtils {
     public Bitmap getBitmap(String imageUrl) {
         try {
             //sdcard/beijingnews/ljsk;l;;llkkljhjjsk
-            String dir = Environment.getExternalStorageDirectory() + "/beijingnews/";
+            String dir = Environment.getExternalStorageDirectory()+"/beijingnews";
             //文件名称
             String fileName = MD5Encoder.encode(imageUrl);
             //sdcard/beijingnews/ljsk;l;;llkkljhjjsk
@@ -72,6 +81,10 @@ public class LocalCachUtils {
             if (file.exists()) {
 
                 Bitmap bitmap = BitmapFactory.decodeStream(new FileInputStream(file));
+
+                if(bitmap != null){
+                    momenyCachUtils.putBitmap2Memory(imageUrl,bitmap);
+                }
 
                 return bitmap;
 
