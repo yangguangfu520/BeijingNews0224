@@ -110,7 +110,7 @@ public class PhotosMenuDetailPager extends MenuDetailBasePager {
         if (datas != null && datas.size() > 0) {
             //有数据
             progressbar.setVisibility(View.GONE);
-            adapater = new PhotosMenuDetailPagerAdapater(context, datas);
+            adapater = new PhotosMenuDetailPagerAdapater(context, datas,recyclerview);
             //设置适配器
             recyclerview.setAdapter(adapater);
 
