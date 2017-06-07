@@ -1,6 +1,8 @@
 package com.atguigu.myapplication.adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +11,7 @@ import android.widget.TextView;
 
 import com.atguigu.beijingnewslibrary.utils.ConstantUtils;
 import com.atguigu.myapplication.R;
+import com.atguigu.myapplication.activity.PicassoSampleActivity;
 import com.atguigu.myapplication.domain.PhotosMenuDetailPagerBean;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -51,7 +54,7 @@ public class PhotosMenuDetailPagerAdapater extends RecyclerView.Adapter<PhotosMe
         //2.绑定数据
         holder.tvTitle.setText(newsBean.getTitle());
         //3.设置点击事件
-        String imageUrl = ConstantUtils.BASE_URL+newsBean.getListimage();
+        String imageUrl = ConstantUtils.BASE_URL + newsBean.getListimage();
         Glide.with(context)
                 .load(imageUrl)
                 .placeholder(R.drawable.pic_item_list_default)
@@ -76,9 +79,23 @@ public class PhotosMenuDetailPagerAdapater extends RecyclerView.Adapter<PhotosMe
         ImageView ivIcon;
         @InjectView(R.id.tv_title)
         TextView tvTitle;
+
         public MyViewHolder(View itemView) {
             super(itemView);
-            ButterKnife.inject(this,itemView);
+            ButterKnife.inject(this, itemView);
+            //设置RecyclerView的item的点击事件
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    //跳转到显示图片的Activity页面，使用的PhotoView
+                    String imageUrl = ConstantUtils.BASE_URL + datas.get(getLayoutPosition()).getListimage();
+                    Intent intent = new Intent(context, PicassoSampleActivity.class);
+                    intent.setData(Uri.parse(imageUrl));
+                    context.startActivity(intent);
+
+                }
+            });
         }
     }
 }

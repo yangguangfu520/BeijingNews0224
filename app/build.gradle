@@ -35,4 +35,7 @@ dependencies {
     compile project(':PullToRefresh_library')
     compile project(':BeiJingNewsLibrary')
     compile 'com.android.support:recyclerview-v7:24.2.1'
+    compile project(':photoview')
+    compile 'com.squareup.picasso:picasso:2.3.2'
+//    compile project(':PhotoView-sample')
 }
