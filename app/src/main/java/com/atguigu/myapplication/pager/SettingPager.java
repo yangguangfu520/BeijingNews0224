@@ -34,6 +34,7 @@ public class SettingPager extends BasePager {
         textView.setText("设置页面的内容");
         textView.setGravity(Gravity.CENTER);
         textView.setTextColor(Color.RED);
+//        fl_content = null;
 
         //添加到布局上
         fl_content.addView(textView);

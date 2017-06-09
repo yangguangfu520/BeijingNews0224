@@ -45,6 +45,10 @@ public class MyApplocation extends Application {
         ShareSDK.initSDK(this);
         //初始化ImagerLoader,并且设置默认配置
         initImageLoader(this);
+
+        //监听捕获异常
+        CrashHandler catchHandler = CrashHandler.getInstance();
+        catchHandler.init(getApplicationContext());
     }
 
 
