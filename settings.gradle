@@ -1,4 +1,4 @@
-include ':app', ':SlidingMenu_library', ':BeiJingNewsLibrary', ':AndroidAndJs', ':photoview',  ':Imageloader_library'
+include ':app', ':SlidingMenu_library', ':BeiJingNewsLibrary', ':AndroidAndJs', ':photoview', ':Imageloader_library', ':sample-okhttp', ':okhttputils_z'
 include ':ViewPagerIndicator_library'
 include ':PullToRefresh_library'
 
