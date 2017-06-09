@@ -7,6 +7,7 @@ import com.zhy.http.okhttp.OkHttpUtils;
 import java.util.concurrent.TimeUnit;
 
 import cn.jpush.android.api.JPushInterface;
+import cn.sharesdk.framework.ShareSDK;
 import okhttp3.OkHttpClient;
 
 /**
@@ -33,5 +34,9 @@ public class MyApplocation extends Application {
 
         JPushInterface.setDebugMode(true); 	// 设置开启日志,发布时请关闭日志
         JPushInterface.init(this);     		// 初始化 JPush
+
+
+        //初始化ShareSdk
+        ShareSDK.initSDK(this);
     }
 }
