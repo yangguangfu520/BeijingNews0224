@@ -19,6 +19,9 @@ import com.atguigu.beijingnewslibrary.utils.NetCachUtils;
 import com.atguigu.myapplication.R;
 import com.atguigu.myapplication.activity.PicassoSampleActivity;
 import com.atguigu.myapplication.domain.PhotosMenuDetailPagerBean;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 
 import java.util.List;
 
@@ -45,6 +48,7 @@ public class PhotosMenuDetailPagerAdapater extends RecyclerView.Adapter<PhotosMe
      * 3.网络缓存
      */
     private BitmapCacheUtils bitmapCacheUtils;
+    private DisplayImageOptions options;
 
     private Handler handler = new Handler(){
         @Override
@@ -77,6 +81,17 @@ public class PhotosMenuDetailPagerAdapater extends RecyclerView.Adapter<PhotosMe
         //把Hanlder传入构造方法
         bitmapCacheUtils = new BitmapCacheUtils(handler);
         this.recyclerview = recyclerview;
+
+        options = new DisplayImageOptions.Builder()
+                .showImageOnLoading(R.drawable.pic_item_list_default)
+                .showImageForEmptyUri(R.drawable.pic_item_list_default)
+                .showImageOnFail(R.drawable.pic_item_list_default)
+                .cacheInMemory(true)
+                .cacheOnDisk(true)
+                .considerExifParams(true)
+                .bitmapConfig(Bitmap.Config.RGB_565)
+                .displayer(new RoundedBitmapDisplayer(10))
+                .build();
     }
 
     @Override
@@ -94,20 +109,22 @@ public class PhotosMenuDetailPagerAdapater extends RecyclerView.Adapter<PhotosMe
         holder.tvTitle.setText(newsBean.getTitle());
         //3.设置点击事件
         String imageUrl = ConstantUtils.BASE_URL + newsBean.getListimage();
-        //使用Glide请求图片
+        //第一种请求图片方式：使用Glide请求图片
 //        Glide.with(context)
 //                .load(imageUrl)
 //                .placeholder(R.drawable.pic_item_list_default)
 //                .error(R.drawable.pic_item_list_default)
 //                .diskCacheStrategy(DiskCacheStrategy.ALL)
 //                .into(holder.ivIcon);
-        //使用自定义方式请求图片
-        Bitmap bitmap = bitmapCacheUtils.getBitmap(imageUrl,position);
-        //图片对应的Tag就是位置
-        holder.ivIcon.setTag(position);
-        if(bitmap != null){//来自内存和本地，不包括网络
-            holder.ivIcon.setImageBitmap(bitmap);
-        }
+        //第二种：使用自定义方式请求图片
+//        Bitmap bitmap = bitmapCacheUtils.getBitmap(imageUrl,position);
+//        //图片对应的Tag就是位置
+//        holder.ivIcon.setTag(position);
+//        if(bitmap != null){//来自内存和本地，不包括网络
+//            holder.ivIcon.setImageBitmap(bitmap);
+//        }
+        //第三种：使用ImagerLoader请求图片
+        ImageLoader.getInstance().displayImage(imageUrl,  holder.ivIcon,options);
 
     }
 
